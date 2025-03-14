@@ -16,7 +16,7 @@ namespace ChatApp.Net
 
         }
 
-        public void ConnecToServer()
+        public void ConnecToServer(string username)
         {
             if(!_client.Connected)
             {

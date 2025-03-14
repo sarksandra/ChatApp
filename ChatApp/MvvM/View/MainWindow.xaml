@@ -22,7 +22,9 @@
 
         <DockPanel>
             <TextBlock Height="25"
-                       DockPanel.Dock="Top"/>
+                       DockPanel.Dock="Top"
+                       Text="{Binding Username}"/>
+            
             <Button Height="25"
                     DockPanel.Dock="Top"
                     Content="Connect"
