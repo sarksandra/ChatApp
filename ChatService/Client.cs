@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using sun.management.jdp;
 using ChatService.Net.IO;
+using java.util;
+using ChatApp;
 
 
 namespace ChatService
@@ -33,8 +35,39 @@ namespace ChatService
 
             Console.WriteLine($"[{DateTime.Now}]: Client has connected with the username: {Username}");
 
+            Task.Run(() => Process());
+
             
 
+        }
+        void Process()
+        {
+            while (true)
+            {
+                try
+                {
+                    var opcode = _packetReader.ReadByte();
+                    switch(opcode)
+                    {
+                        case 5:
+                            var msg = _packetReader.ReadMessage();
+                            Console.WriteLine($"[{DateTime.Now}]: massage received! {msg}");
+                            Program.BroadcastMessage($"[{DateTime.Now}]: [{Username}]: {msg}");
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+                catch(Exception)
+                {
+                    Console.WriteLine($"[{UID.ToString()}]: Disconnected");
+                    Program.BroadcastDisconnect(UID.ToString());
+                    ClientSocket.Close();
+                    break;
+
+                }
+            }
         }
 
     }

@@ -14,6 +14,8 @@ namespace ChatApp.Net
         public PacketReader PacketReader;
 
         public event Action connectedEvent;
+        public event Action msgRecivedEvent;
+        public event Action disconnect;
         //PacketBuilder _packetBuilder;
         public Server()
         {
@@ -32,14 +34,50 @@ namespace ChatApp.Net
                 {
                     var connectPacket = new PacketBuilder();
                     connectPacket.WriteOpCode(0);
-                    connectPacket.WriteString(username);
+                    connectPacket.WriteMesseage(username);
                     _client.Client.Send(connectPacket.GetPacketBytes());
                 }
+                ReadPackets();
 
 
 
             }
 
+
+        }
+        private void ReadPackets()
+        {
+            Task.Run(() =>
+            {
+                while (true)
+                {
+                    var opcode = PacketReader.ReadByte();
+                    switch (opcode)
+                    {
+                        case 1:
+                            connectedEvent?.Invoke();
+                            break;
+                        case 5:
+                            msgRecivedEvent?.Invoke();
+                            break;
+                        case 10:
+                            disconnect?.Invoke();
+                            break;
+
+                        default:
+                            Console.WriteLine("ah yes..");
+                            break;
+                    }
+
+                }
+            });
+        }
+        public void SendMessageToServer(string message)
+        {
+            var messagePacket = new PacketBuilder();
+            messagePacket.WriteOpCode(5);
+            messagePacket.WriteMesseage(message);
+            _client.Client.Send(messagePacket.GetPacketBytes());
         }
     }
 }

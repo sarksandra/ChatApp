@@ -29,19 +29,26 @@
                     DockPanel.Dock="Top"
                     Content="Connect"
                     Command="{Binding ConnectToServerCommand}"/>
-            
-            <ListView/>
+
+            <ListView ItemsSource="{Binding Users}">
+                <DataTemplate>
+                    <TextBlock Text="{Binding Username}"/>
+                </DataTemplate>
+            </ListView>
         </DockPanel>
 
         <StackPanel Grid.Column="1">
-            <ListView Height="380"/>
+            <ListView Height="380"
+                      ItemsSource="{Binding Messages}"/>
 
             <StackPanel Orientation="Horizontal">
                 <TextBox Height="55"
                          Width="545"
-                         VerticalContentAlignment="Center"/>
+                         VerticalContentAlignment="Center"
+                         Text="{Binding Message, UpdateSourceTrigger = PropertyChanged}"/>
                 <Button Width="55"
-                        Content="Send"/>
+                        Content="Send"
+                        Command="{Binding SendMessageCommand}"/>
             </StackPanel>
 
 
