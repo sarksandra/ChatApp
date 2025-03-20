@@ -1,4 +1,5 @@
 ﻿using ChatService;
+using ChatService.Net.IO;
 using System.Net;
 using System.Net.Sockets;
 
@@ -18,10 +19,25 @@ namespace ChatApp
             {
                 var client = new Client(_listener.AcceptTcpClient());
                 _user.Add(client);
+
+                BroadcastConnetion();
             }
+        }
+        static void BroadcastConnetion()
+        {
+            foreach (var user in _user)
+            {
+                foreach(var usr in _user)
+                {
+                    var broadcastPacket = new PacketBuilder();
+                    broadcastPacket.WriteOpCode(1);
+                    broadcastPacket.WriteMessage(usr.Username);
+                    broadcastPacket.WriteMessage(usr.UID.ToString());
+                    user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes());
 
-            
-
+                }
+                
+            }
         }
     }
 }

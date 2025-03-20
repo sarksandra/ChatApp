@@ -14,12 +14,18 @@ namespace ChatApp.MvvM.ViewModel
 
         public string Username { get; set; }
 
-        public Server _server;
+        private Server _server;
 
         public MainViewModel()
         {
             _server = new Server();
-            ConnectToServerCommand = new RelayCommand(o => _server.ConnecToServer());
+            _server.connectedEvent += UserConnected;
+            ConnectToServerCommand = new RelayCommand(o => _server.ConnecToServer(Username), o => !string.IsNullOrEmpty(Username));
+
+        }
+
+        private void UserConnected()
+        {
 
         }
     }
