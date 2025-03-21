@@ -8,12 +8,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
-
-
     <Window.DataContext>
-        <viewmodel:MainViewModel/>
+        <viewmodel:MainViewModel />
     </Window.DataContext>
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
@@ -21,19 +19,19 @@
         </Grid.ColumnDefinitions>
 
         <DockPanel>
-            <TextBlock Height="25"
-                       DockPanel.Dock="Top"
-                       Text="{Binding Username}"/>
-            
+            <TextBox Height="25"
+                     DockPanel.Dock="Top"
+                     Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"/>
             <Button Height="25"
                     DockPanel.Dock="Top"
                     Content="Connect"
                     Command="{Binding ConnectToServerCommand}"/>
-
             <ListView ItemsSource="{Binding Users}">
-                <DataTemplate>
-                    <TextBlock Text="{Binding Username}"/>
-                </DataTemplate>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Username}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
             </ListView>
         </DockPanel>
 
@@ -43,17 +41,13 @@
 
             <StackPanel Orientation="Horizontal">
                 <TextBox Height="55"
-                         Width="545"
-                         VerticalContentAlignment="Center"
-                         Text="{Binding Message, UpdateSourceTrigger = PropertyChanged}"/>
+                           Width="545"
+                           VerticalContentAlignment="Center"
+                           Text="{Binding Message, UpdateSourceTrigger=PropertyChanged }"/>
                 <Button Width="55"
                         Content="Send"
                         Command="{Binding SendMessageCommand}"/>
             </StackPanel>
-
-
         </StackPanel>
-
-        
     </Grid>
 </Window>
