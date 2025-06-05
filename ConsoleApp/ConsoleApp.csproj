@@ -8,7 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="MvvM\View\" />
+    <Compile Remove="MvvM\View\**" />
+    <EmbeddedResource Remove="MvvM\View\**" />
+    <None Remove="MvvM\View\**" />
   </ItemGroup>
 
 </Project>
