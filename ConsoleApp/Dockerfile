@@ -19,3 +19,5 @@ EXPOSE 5000
 
 # Set the entrypoint
 CMD ["dotnet", "ConsoleApp.dll"]
+
+# docker-compose up --build 

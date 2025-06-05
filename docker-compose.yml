@@ -29,4 +29,6 @@ services:
 
 networks:
   chatnet:
-    driver: bridge
+    driver: bridge 
+
+    
