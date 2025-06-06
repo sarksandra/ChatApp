@@ -19,6 +19,6 @@ services:
             - some-net
 networks:
   some-net:
-    driver: bridge
+
 
     

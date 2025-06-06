@@ -12,7 +12,7 @@ namespace ChatApp
         static void Main(string[] args)
         {
             _user = new List<Client>();
-            _listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 7891);
+            _listener = new TcpListener(IPAddress.Any, 7891);
             _listener.Start();
 
             while (true)
