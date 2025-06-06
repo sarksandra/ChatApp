@@ -15,7 +15,7 @@ namespace ChatApp
             _listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 7891);
             _listener.Start();
 
-            while(true)
+            while (true)
             {
                 var client = new Client(_listener.AcceptTcpClient());
                 _user.Add(client);
@@ -27,7 +27,7 @@ namespace ChatApp
         {
             foreach (var user in _user)
             {
-                foreach(var usr in _user)
+                foreach (var usr in _user)
                 {
                     var broadcastPacket = new PacketBuilder();
                     broadcastPacket.WriteOpCode(1);
@@ -36,12 +36,12 @@ namespace ChatApp
                     user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes());
 
                 }
-                
+
             }
         }
         public static void BroadcastMessage(string message)
         {
-            foreach(var user in _user)
+            foreach (var user in _user)
             {
                 var msgPacket = new PacketBuilder();
                 msgPacket.WriteOpCode(5);
